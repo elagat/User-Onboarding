@@ -33,6 +33,7 @@ const SignUpForm = ({ errors, touched, values, handleSubmit, status }) => {
           name='terms'
           checked={values.terms}
         />
+        {touched.terms && errors.terms && <p>{errors.terms}</p>}
        </label>
 
        <button type='submit'>Submit</button>
@@ -59,6 +60,7 @@ const FormikForm = withFormik({
     name: Yup.string().required(),
     email: Yup.string().email().required(),
     password: Yup.string().min(8).required('Password must contain 8 characters'),
+    terms: Yup.bool().oneOf([true])
   }),
 
   handleSubmit(values, { setStatus }) {
