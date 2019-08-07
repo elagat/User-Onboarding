@@ -6,8 +6,8 @@ import * as Yup from 'yup';
 const SignUpForm = ({ values }) => {
 
   return (
-    <div classname='form'>
-      <h1>Form</h1>
+    <div className='form'>
+      <h1>Sign Up Form</h1>
       <Form>
        <Field type='text' name='name' placeholder='Name' />
 
@@ -16,7 +16,7 @@ const SignUpForm = ({ values }) => {
        <Field type='password' name='password' placeholder='Password' />
 
        <label className='terms'>
-        Terms of Service
+        Accept Terms of Service
         <Field
           type='checkbox'
           name='terms'
@@ -44,12 +44,16 @@ const FormikForm = withFormik({
     name: Yup.string().required(),
     email: Yup.string().email().required(),
     password: Yup.string().min(8).required('Password must contain 8 characters'),
-    terms: Yup.isValid(true).required('Check to accept Terms of Service')
   }),
 
-  handleSubmit(values) {
-    console.log(values);
+  handleSubmit(values, { setStatus }) {
+    axios
+      .post('https://reqres.in/api/users', values)
+      .then(response => {
+        setStatus(response.data);
+      })
+      .catch(error => console.log(error.response));
   }
 })(SignUpForm);
 
-export default Form;
+export default FormikForm;
