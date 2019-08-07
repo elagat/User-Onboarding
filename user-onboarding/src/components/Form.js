@@ -37,9 +37,13 @@ const SignUpForm = ({ errors, touched, values, handleSubmit, status }) => {
 
        <button type='submit'>Submit</button>
       </Form>
+
+      {users.map(user => (
+        <p key={user.id}>{user.name}</p>
+      ))}
     </div>
-  )
-}
+  );
+};
 
 const FormikForm = withFormik({
   mapPropsToValues({ name, email, password, terms }) {
