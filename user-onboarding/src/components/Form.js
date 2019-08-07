@@ -37,8 +37,19 @@ const FormikForm = withFormik({
       email: email || '',
       password: password || '',
       terms: terms || false
-    }
+    };
+  },
+
+  validationSchema: Yup.object().shape({
+    name: Yup.string().required(),
+    email: Yup.string().email().required(),
+    password: Yup.string().min(8).required('Password must contain 8 characters'),
+    terms: Yup.isValid(true).required('Check to accept Terms of Service')
+  }),
+
+  handleSubmit(values) {
+    console.log(values);
   }
-})(Form);
+})(SignUpForm);
 
 export default Form;
